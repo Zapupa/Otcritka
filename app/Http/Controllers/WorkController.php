@@ -47,4 +47,17 @@ class WorkController extends Controller
         ]);
         return redirect()->route('dashboard');
     }
+
+    public function update(Request $request)
+    {
+        $data = $request->validate([
+            'id' => ['required'],
+            'score' => ['required'],
+        ]);
+
+        Work::where('id', $data['id'])->update(
+            ['score' => $data['score']]
+        );
+        return redirect()->back();
+    }
 }

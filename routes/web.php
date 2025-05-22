@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkController;
+use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/logout', [ProfileController::class, 'logout'])->name('profile.logout');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(Admin::class)->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::patch('/work/update', [WorkController::class, 'update'])->name('work.update');
 });
 
 require __DIR__ . '/auth.php';
